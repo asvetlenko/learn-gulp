@@ -2,29 +2,26 @@
 
 const gulp = require('gulp');
 
-gulp.task('example:hello', (callback) => {
-    console.log('----Hello');
-    callback();
+gulp.task('default', function () {
+    return gulp.src('./source/**/*.*')
+        .on('data', function (file) {
+            var logObjBase = {
+                contents: file.contents,
+                path: file.path,
+                cwd: file.cwd,
+                base: file.base
+            };
+            console.log('----- base:', logObjBase);
+
+            var logObj2 = {
+                relative: file.relative,
+                dirname: file.dirname, // ../source/client.js
+                basename: file.basename, // client.js
+                stem: file.stem, // client
+                extname: file.extname // .js
+            };
+
+            console.log('-----path component helpers:', logObj2); // js/client.js
+        })
+        .pipe(gulp.dest('dest'))
 });
-
-gulp.task('example:promise', function () {
-    return new Promise((resolve, reject) => {
-            console.log('----Promise');
-            resolve();
-        });
-});
-
-gulp.task('example:stream', () => {
-    // reads all from stream (and throws the data away) and then done
-    console.log('----Stream');
-    return require('fs').createReadStream(__filename);
-});
-
-gulp.task('example:process', () =>{
-    console.log('----Process');
-     return('child_roccess').spawn('ls', ['.'], {stdio: 'inherit'});
-});
-
-
-gulp.task('example', gulp.series('example:hello', 'example:promise', 'example:stream', 'example:process'));
-//gulp.task('example', gulp.parallel('example:hello', 'example:promise', 'example:stream'));
