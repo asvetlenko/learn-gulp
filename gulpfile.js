@@ -3,7 +3,7 @@
 const gulp = require('gulp');
 
 gulp.task('default', function () {
-    return gulp.src('./source/**/*.*')
+    return gulp.src('./source/**/*.{css,log}') //minimatch
         .on('data', function (file) {
             var logObjBase = {
                 contents: file.contents,
@@ -23,5 +23,24 @@ gulp.task('default', function () {
 
             console.log('-----path component helpers:', logObj2); // js/client.js
         })
-        .pipe(gulp.dest('dest'))
+        //.pipe(gulp.dest('result-folder'));
+        .pipe(gulp.dest(function (file) {
+            var resultPath = '';
+            switch (file.extname){
+                case '.js' :{
+                    resultPath = 'appJS';
+                    break;
+                }
+                case '.css' :{
+                    resultPath = 'appStyle';
+                    break;
+                }
+                default:{
+                    resultPath = 'dest';
+                    break;
+                }
+            }
+
+            return resultPath;
+        }));
 });
