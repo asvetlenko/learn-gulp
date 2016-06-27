@@ -13,18 +13,18 @@ gulp.task('example:promise', function () {
             resolve();
         });
 });
-/*
-gulp.task('example:stream' () => {
+
+gulp.task('example:stream', () => {
     // reads all from stream (and throws the data away) and then done
     console.log('----Stream');
-    return require('fs').createReadStream(_filename);
+    return require('fs').createReadStream(__filename);
 });
 
-gulp.task('example:process' () =>{
+gulp.task('example:process', () =>{
     console.log('----Process');
      return('child_roccess').spawn('ls', ['.'], {stdio: 'inherit'});
-})
- */
+});
 
-//gulp.task('example', gulp.series('example:hello', 'example:promise'));
-gulp.task('example', gulp.parallel('example:hello', 'example:promise'));
+
+gulp.task('example', gulp.series('example:hello', 'example:promise', 'example:stream', 'example:process'));
+//gulp.task('example', gulp.parallel('example:hello', 'example:promise', 'example:stream'));
