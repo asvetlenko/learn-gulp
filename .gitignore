@@ -1,0 +1,11 @@
+.idea/
+node_modules
+npm-debug.log
+[Aa]pp_[Dd]ata
+ImportExportRepository
+*.config
+
+
+#Project files
+[Bb]uild/
+!**/packages/*/build/
