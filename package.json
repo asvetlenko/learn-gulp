@@ -2,7 +2,7 @@
   "name": "learn-gulp",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "source/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "gulp": "gulp"
@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/asvetlenko/learn-gulp#readme",
   "dependencies": {
-    "gulp": "github:gulpjs/gulp#4.0"
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-stylus": "^2.5.0",
+    "stylus": "^0.54.5"
   }
 }
