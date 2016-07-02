@@ -23,9 +23,19 @@ gulp.task('build:clean', function () {
     return del('public');
 });
 gulp.task('build:assets', function () {
-    return gulp.src('frontend/assets/**', {base: 'frontend'})
+    return gulp.src('frontend/assets/**', {base: 'frontend', since: gulp.lastRun('build:assets')})
         .pipe(gulp.dest('public'));
 });
 
 gulp.task('default', gulp.series('build:clean',
     gulp.parallel('build:styles', 'build:assets')));
+
+
+gulp.task('watch', function (callback) {
+    gulp.watch('frontend/styles/**/*.*', gulp.series('build:styles'));
+    gulp.watch('frontend/assets/**/*.*', gulp.series('build:assets'));
+
+    callback();
+});
+
+gulp.task('dev', gulp.series('default', 'watch'));
