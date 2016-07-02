@@ -5,18 +5,16 @@ const stylus = require('gulp-stylus');
 const concat = require('gulp-concat');
 const debug = require('gulp-debug');
 const sourcemaps = require('gulp-sourcemaps');
+const gulpIf = require('gulp-if');
+
+const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
 gulp.task('build:styles', () => {
     return gulp.src('frontend/styles/main.styl', {base: 'frontend'})
-        .pipe(debug({title: 'sourcemaps.init'}))
-        .pipe(sourcemaps.init())
-        .pipe(debug({title: 'src'}))
+        .pipe(gulpIf(isDev, sourcemaps.init()))
         .pipe(stylus())
-        .pipe(debug({title: 'stylus'}))
         .pipe(concat('all.css'))
-        .pipe(debug({title: 'concat'}))
-        .pipe(sourcemaps.write('.'))
-        .pipe(debug({title: 'sourcemaps.write'}))
+        .pipe(gulpIf(isDev, sourcemaps.write('.')))
         .pipe(gulp.dest('public'));
 });
 
