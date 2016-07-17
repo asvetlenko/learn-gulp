@@ -7,6 +7,7 @@ const debug = require('gulp-debug');
 const sourcemaps = require('gulp-sourcemaps');
 const gulpIf = require('gulp-if');
 const del = require('del');
+const newer = require('gulp-newer');
 
 const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 
@@ -24,6 +25,8 @@ gulp.task('build:clean', function () {
 });
 gulp.task('build:assets', function () {
     return gulp.src('frontend/assets/**', {base: 'frontend', since: gulp.lastRun('build:assets')})
+        .pipe(newer('public'))
+        .pipe(debug({title:'assets'}))
         .pipe(gulp.dest('public'));
 });
 
